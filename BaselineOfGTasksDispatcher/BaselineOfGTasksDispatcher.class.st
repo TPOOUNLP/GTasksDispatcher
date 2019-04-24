@@ -9,7 +9,7 @@ BaselineOfGTasksDispatcher >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ spec package: 'BaselineOfGTasksDispatcher'.
+		do: [ spec package: 'GTasksDispatcher'.
 			spec group: 'default' with: #('FileDialog') ]
 ]
 
