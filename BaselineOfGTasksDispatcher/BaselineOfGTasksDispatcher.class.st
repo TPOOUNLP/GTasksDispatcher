@@ -9,7 +9,7 @@ BaselineOfGTasksDispatcher >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ spec package: 'BMyCoolProjectWithPharo'.
+		do: [ spec package: 'BaselineOfGTasksDispatcher'.
 			spec group: 'default' with: #('FileDialog') ]
 ]
 
