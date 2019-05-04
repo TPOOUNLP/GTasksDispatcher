@@ -8,11 +8,6 @@ Class {
 	#category : #'GTasksDispatcher-Tests'
 }
 
-{ #category : #accessing }
-TaskTest >> agenda: anObject [
-	agenda := anObject
-]
-
 { #category : #'as yet unclassified' }
 TaskTest >> setUp [
 	googleTaskClient := GoogleTaskClient
@@ -41,7 +36,7 @@ TaskTest >> testAbmTaskOffLine [
 
 { #category : #'as yet unclassified' }
 TaskTest >> testAbmTaskOnLine [
-	| taskList task |
+	| taskList task|
 	taskList := TaskList onLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
 	self assert: task isPersist.

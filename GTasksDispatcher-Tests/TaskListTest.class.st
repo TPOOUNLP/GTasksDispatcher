@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 TaskListTest >> setUp [
 	googleTaskClient := GoogleTaskClient
-		new: '908090974740-50h6p604j68p5pltfjs7qm9sclg2bflj.apps.googleusercontent.com'
+		new: 'AIzaSyDqWEkPAVvWJvKKqb8EwAypGXUP3jfAf38.apps.googleusercontent.com'
 		secret: 'wl8nnK6nYl8I3i5ORswu0byf'
 		redirectUrl: 'http://localhost:8200/sso-google-callback'
 ]

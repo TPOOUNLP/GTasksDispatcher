@@ -107,7 +107,7 @@ GoogleTaskHttpClient >> insertTask: aAttributeMap inTasklist: aTasklistId [
 GoogleTaskHttpClient >> insertTasklist: aTasklistTitle [
 	^ ZnClient new
 		url:
-			self serviceUrl , '/users/@me/lists?access_token='
+		   self serviceUrl , '/users/@me/lists?access_token='
 				, GoogleSSOServerDelegate session accessToken;
 		entity: (ZnEntity with: '{"title":"' , aTasklistTitle , '"}' type: ZnMimeType applicationJson);
 		post;
