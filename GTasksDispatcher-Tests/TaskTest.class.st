@@ -3,17 +3,23 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'googleTaskClient',
-		'googleTaskHttpClient'
+		'googleTaskHttpClient',
+		'agenda'
 	],
 	#category : #'GTasksDispatcher-Tests'
 }
 
+{ #category : #accessing }
+TaskTest >> agenda: anObject [
+	agenda := anObject
+]
+
 { #category : #'as yet unclassified' }
 TaskTest >> setUp [
 	googleTaskClient := GoogleTaskClient
-		new: '908090974740-50h6p604j68p5pltfjs7qm9sclg2bflj.apps.googleusercontent.com'
-		secret: 'wl8nnK6nYl8I3i5ORswu0byf'
-		redirectUrl: 'http://localhost:8200/sso-google-callback'.
+		new: '984973766290-m0kts2gcb86bn6alib1bolp54i1nc3i2.apps.googleusercontent.com'
+		secret: 'wdK3pYvR4tApDCIU0B7pMaBz5'
+		redirectUrl: 'http://localhost:8100/sso-google-callback'.
 
 ]
 

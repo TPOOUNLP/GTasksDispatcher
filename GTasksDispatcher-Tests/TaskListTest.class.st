@@ -9,10 +9,10 @@ Class {
 
 { #category : #'as yet unclassified' }
 TaskListTest >> setUp [
-	googleTaskClient := GoogleTaskClient
-		new: 'AIzaSyDqWEkPAVvWJvKKqb8EwAypGXUP3jfAf38.apps.googleusercontent.com'
-		secret: 'wl8nnK6nYl8I3i5ORswu0byf'
-		redirectUrl: 'http://localhost:8200/sso-google-callback'
+	googleTaskClient := GoogleTaskClient 
+		new: '984973766290-m0kts2gcb86bn6alib1bolp54i1nc3i2.apps.googleusercontent.com'
+		secret: 'dK3pYvR4tApDCIU0B7pMaBz5'
+		redirectUrl: 'http://localhost:8100/sso-google-callback'
 ]
 
 { #category : #'as yet unclassified' }

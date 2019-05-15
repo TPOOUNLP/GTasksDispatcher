@@ -1,3 +1,9 @@
+"
+GoogleTaskHttpClient 
+		key: '984973766290-m0kts2gcb86bn6alib1bolp54i1nc3i2.apps.googleusercontent.com'
+		secret: 'dK3pYvR4tApDCIU0B7pMaBz5'
+		redirectUrl: 'http://localhost:8100/sso-google-callback'
+"
 Class {
 	#name : #GoogleTaskHttpClient,
 	#superclass : #Object,
@@ -84,7 +90,7 @@ GoogleTaskHttpClient >> initialize [
 		googleData: consumer;
 		yourself.
 	self
-		serverPort: 8200;
+		serverPort: 8100;
 		sessionServer:
 			((ZnServer startDefaultOn: self serverPort)
 				delegate: authenticator;

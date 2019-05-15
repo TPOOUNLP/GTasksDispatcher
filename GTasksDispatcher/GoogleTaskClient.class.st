@@ -1,3 +1,30 @@
+"
+""Run the local server""
+consumer:=(ZnOAuth2ConsumerData 
+			key: '984973766290-m0kts2gcb86bn6alib1bolp54i1nc3i2.apps.googleusercontent.com'
+			secret: 'dK3pYvR4tApDCIU0B7pMaBz5' 
+			redirectUrl: 'http://localhost:8100/sso-google-callback').
+
+delegate:=(GoogleSSOServerDelegate new
+			googleData: consumer;
+			yourself).
+
+server:= (ZnServer startOn: 8100)
+			delegate: delegate;
+			yourself.
+""Reset the singleton!""
+GoogleTaskClient reset.
+
+""Create the GoogleTask Client""
+gTaskClient:= GoogleTaskClient 
+		new: '984973766290-m0kts2gcb86bn6alib1bolp54i1nc3i2.apps.googleusercontent.com'
+		secret: 'dK3pYvR4tApDCIU0B7pMaBz5'
+		redirectUrl: 'http://localhost:8100/sso-google-callback'.
+
+""Sychronize and inspect... ""
+gTalkClient sync; inspect.
+
+"
 Class {
 	#name : #GoogleTaskClient,
 	#superclass : #Object,
@@ -11,17 +38,17 @@ Class {
 	#category : #GTasksDispatcher
 }
 
-{ #category : #accessing }
+{ #category : #singleton }
 GoogleTaskClient class >> errorInstance [
 	^ (Error new messageText: 'no hay un cliente google task instanciado!') signal
 ]
 
-{ #category : #accessing }
+{ #category : #singleton }
 GoogleTaskClient class >> instance [
 	^ Instance
 ]
 
-{ #category : #accessing }
+{ #category : #singleton }
 GoogleTaskClient class >> instance: anObject [
 	Instance := anObject
 ]
@@ -37,6 +64,11 @@ GoogleTaskClient class >> new: aKey secret: aSecretKey redirectUrl: anUrl [
 	self instance ifNil: [ self instance: (GoogleTaskClient basicNew initialize: aKey secret: aSecretKey redirectUrl: anUrl)
 ].
 	^ self instance
+]
+
+{ #category : #singleton }
+GoogleTaskClient class >> reset [
+	Instance := nil
 ]
 
 { #category : #accessing }

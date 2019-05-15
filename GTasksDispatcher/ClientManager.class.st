@@ -34,6 +34,11 @@ ClientManager class >> new: aKey secret: aSecretKey redirectUrl: anUrl [
 	^ self instance
 ]
 
+{ #category : #initialization }
+ClientManager class >> reset [
+	self instance: nil
+]
+
 { #category : #accessing }
 ClientManager >> addTaskList: aTaskList [
 	| tasklist |
@@ -135,8 +140,14 @@ ClientManager >> loadTask: tasksLists [
 
 { #category : #accessing }
 ClientManager >> serialize: anObject [
-	^NeoJSONWriter toString: ((NeoJSONReader fromString: anObject) at: 'items').
-	
+	"	^NeoJSONWriter toString: ((NeoJSONReader fromString: anObject) at: 'items' ifAbsent: ['[]']).
+"
+
+	| items | 
+	items := (NeoJSONReader fromString: anObject)
+		at: 'items'
+		ifAbsent: [ Array  new ].
+	^ NeoJSONWriter toString: items
 ]
 
 { #category : #accessing }
