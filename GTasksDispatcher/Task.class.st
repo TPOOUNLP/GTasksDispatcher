@@ -9,7 +9,8 @@ Class {
 		'updated',
 		'notes',
 		'status',
-		'active'
+		'active',
+		'modified'
 	],
 	#category : #GTasksDispatcher
 }
@@ -71,12 +72,24 @@ Task >> id: anObject [
 { #category : #accessing }
 Task >> initialize [
 	self setTitle: ' '.
+	self modified:true.
 	self active:true.
 ]
 
 { #category : #accessing }
 Task >> isPersist [
 	^ self id isNotNil
+]
+
+{ #category : #accessing }
+Task >> modified [
+	^ modified
+]
+
+{ #category : #accessing }
+Task >> modified: anObject [
+	modified := anObject.
+"	self taskList updateTask: self"
 ]
 
 { #category : #accessing }
@@ -93,6 +106,13 @@ Task >> notes: anObject [
 { #category : #accessing }
 Task >> persist [
 	self isPersist ifFalse: [ ClientManager new insertTask: self inTaskList: self taskList ]
+]
+
+{ #category : #accessing }
+Task >> persistAndUpdate [
+	self isPersist
+		ifTrue: [ GoogleTaskClient new updateTask: self inTaskList: self taskList ]
+		ifFalse: [ ClientManager new insertTask: self inTaskList: self taskList ]
 ]
 
 { #category : #accessing }

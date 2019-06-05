@@ -81,16 +81,18 @@ GoogleTaskHttpClient >> getTaskList: aTasklistId [
 
 { #category : #initialization }
 GoogleTaskHttpClient >> initialize [
-	| consumer authenticator |
+	| consumer authenticator credentials myCredential|
+credentials := CredentialsGithub new.
+myCredential := credentials credentialsTo: 'me'.
 	consumer := ZnOAuth2ConsumerData
-		key: self key
-		secret: self secret
-		redirectUrl: self redirectUrl.
+		key: myCredential key
+		secret: myCredential secret
+		redirectUrl: myCredential redirectUrl.
 	authenticator := GoogleSSOServerDelegate new
 		googleData: consumer;
 		yourself.
 	self
-		serverPort: 8100;
+		serverPort: 8080;
 		sessionServer:
 			((ZnServer startDefaultOn: self serverPort)
 				delegate: authenticator;

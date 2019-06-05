@@ -9,10 +9,13 @@ Class {
 
 { #category : #'as yet unclassified' }
 TaskListTest >> setUp [
+|credentials myCredential|
+credentials := CredentialsGithub new.
+myCredential := credentials credentialsTo: 'me'.
 	googleTaskClient := GoogleTaskClient 
-		new: '984973766290-m0kts2gcb86bn6alib1bolp54i1nc3i2.apps.googleusercontent.com'
-		secret: 'dK3pYvR4tApDCIU0B7pMaBz5'
-		redirectUrl: 'http://localhost:8100/sso-google-callback'
+		new: myCredential key
+		secret: myCredential secret
+		redirectUrl: myCredential redirectUrl 
 ]
 
 { #category : #'as yet unclassified' }
