@@ -17,7 +17,7 @@ TaskTest >> agenda: anObject [
 { #category : #'as yet unclassified' }
 TaskTest >> setUp [
 	| credentials myCredential |
-	credentials := CredentialsGithub new.
+	credentials := UsersCredentials new.
 	myCredential := credentials credentialsTo: 'me'.
 	googleTaskClient := GoogleTaskClient
 		new: myCredential key

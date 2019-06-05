@@ -1,5 +1,5 @@
 Class {
-	#name : #CredentialsGithub,
+	#name : #UsersCredentials,
 	#superclass : #Object,
 	#instVars : [
 		'credentials'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-CredentialsGithub >> credentialsTo: anUser [
+UsersCredentials >> credentialsTo: anUser [
 	|credential |
 	credential:= credentials at: 'mendiccini'.
 	^ UserCredential key: (credential at: 'key') secret: (credential at: 'secret') redirectUrl: (credential at: 'redirectUrl')
@@ -18,7 +18,7 @@ CredentialsGithub >> credentialsTo: anUser [
 ]
 
 { #category : #accessing }
-CredentialsGithub >> initialize [
+UsersCredentials >> initialize [
 credentials:= NeoJSONReader fromString:
 									'{
 										"mendiccini" : {
@@ -27,7 +27,8 @@ credentials:= NeoJSONReader fromString:
 											"redirectUrl": "http://localhost:8080/sso-google-callback"
 										},
 										"perez" : { 
-											"secret" : "secret",
-											"token" : "token"
+											"key" : "aKey",
+											"secret" : "aSecret"
+											"redirectUrl": "http://localhost:8080/sso-google-callback"
 										} }'.
 ]

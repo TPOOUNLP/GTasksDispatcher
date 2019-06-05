@@ -78,7 +78,7 @@ ClientManager >> getTaskLists [
 { #category : #accessing }
 ClientManager >> initialize [
 |credentials myCredential|
-credentials := CredentialsGithub new.
+credentials := UsersCredentials new.
 myCredential := credentials credentialsTo: 'me'.
 	self
 		server:

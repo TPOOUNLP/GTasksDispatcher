@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 TaskListTest >> setUp [
 |credentials myCredential|
-credentials := CredentialsGithub new.
+credentials := UsersCredentials new.
 myCredential := credentials credentialsTo: 'me'.
 	googleTaskClient := GoogleTaskClient 
 		new: myCredential key
