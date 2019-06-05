@@ -33,7 +33,7 @@ TaskTest >> testAbmTaskOffLine [
 	| taskList task |
 	taskList := TaskList offLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
-	self deny: task isPersist.
+	self deny: task isPersistant.
 	task title: 'Test'.
 	self assert: task title = 'Test'.
 	task remove.
@@ -45,7 +45,7 @@ TaskTest >> testAbmTaskOnLine [
 	| taskList task|
 	taskList := TaskList onLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
-	self assert: task isPersist.
+	self assert: task isPersistant.
 	task title: 'Test'.
 	self assert: task title = 'Test'.
 	task remove
@@ -57,7 +57,7 @@ TaskTest >> testAbmTaskOnLineOffLineToOnline [
 	| taskList task |
 	taskList := TaskList onLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
-	self assert: task isPersist.
+	self assert: task isPersistant.
 	task title: 'Test'.
 	self assert: task title = 'Test'.
 	task remove

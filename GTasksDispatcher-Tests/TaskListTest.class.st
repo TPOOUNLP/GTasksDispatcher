@@ -24,7 +24,7 @@ TaskListTest >> tearDown [
 TaskListTest >> testCreateTaskListOffLineAbm [
 	| taskList |
 	taskList := TaskList offLine: 'lista de tarea offline test'.
-	self deny: taskList isPersist.
+	self deny: taskList isPersistant.
 	taskList title: 'titulo modificado'.
 	self assert: taskList title = 'titulo modificado'. taskList remove.
 	self deny: taskList active
@@ -34,21 +34,21 @@ TaskListTest >> testCreateTaskListOffLineAbm [
 TaskListTest >> testTaskListOffLineToOnline [
 	| taskList |
 	taskList := TaskList offLine: 'tarea offLine'.
-	self deny: taskList isPersist.
+	self deny: taskList isPersistant.
 	taskList onLine.
-	self assert: taskList isPersist .
+	self assert: taskList isPersistant.
 	taskList remove.
-	self deny: taskList isPersist .
+	self deny: taskList isPersistant.
 ]
 
 { #category : #'as yet unclassified' }
 TaskListTest >> testTaskListOnLineAbm [
 	| taskList tituloAnterior|
 	taskList := TaskList onLine: 'lista de tarea offline test'.
-	self assert: taskList isPersist.
+	self assert: taskList isPersistant.
 	tituloAnterior := taskList title.
 	taskList title: 'modificando titulo'.
 	self deny: taskList title = tituloAnterior .
 	taskList remove.
-	self deny: taskList isPersist .
+	self deny: taskList isPersistant.
 ]
