@@ -27,8 +27,8 @@ credentials:= NeoJSONReader fromString:
 											"redirectUrl": "http://localhost:8080/sso-google-callback"
 										},
 										"perez" : { 
-											"key" : "aKey",
-											"secret" : "aSecret",
-											"redirectUrl": "http://localhost:8080/sso-google-callback"
+											"key" : "868363521190-htu9hve7g1l0215e8ahs48s0uerhompe.apps.googleusercontent.com",
+											"secret" : "nYVZIR37unJV8QoH7mPAQ9F0",
+											"redirectUrl": "http://localhost:8100/sso-google-callback"
 										} }'.
 ]
