@@ -29,8 +29,7 @@ ClientManager class >> new [
 { #category : #accessing }
 ClientManager class >> new: aKey secret: aSecretKey redirectUrl: anUrl [
 
-	self instance ifNil: [ self instance: (ClientManager basicNew initialize: aKey secret: aSecretKey redirectUrl: anUrl)
- ].
+self instance: (ClientManager basicNew initialize: aKey secret: aSecretKey redirectUrl: anUrl).
 	^ self instance
 ]
 
@@ -78,12 +77,15 @@ ClientManager >> getTaskLists [
 
 { #category : #accessing }
 ClientManager >> initialize [
+|credentials myCredential|
+credentials := UsersCredentials new.
+myCredential := credentials credentialsTo: 'me'.
 	self
 		server:
 			(GoogleTaskHttpClient
-				key: '908090974740-50h6p604j68p5pltfjs7qm9sclg2bflj.apps.googleusercontent.com'
-				secret: 'wl8nnK6nYl8I3i5ORswu0byf'
-				redirectUrl: 'http://localhost:8200/sso-google-callback').
+				key: myCredential key
+		secret: myCredential secret
+		redirectUrl: myCredential redirectUrl ).
 	ConfigurationOfZincHTTPComponents project latestVersion load: 'SSO'.
 ]
 

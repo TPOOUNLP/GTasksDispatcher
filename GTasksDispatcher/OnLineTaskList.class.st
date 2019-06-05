@@ -61,8 +61,7 @@ OnLineTaskList >> sync: aTaskList [
 
 { #category : #'as yet unclassified' }
 OnLineTaskList >> syncTasks: aTaskList [
-	aTaskList tasks do: [ :task | task persist ].
-	aTaskList tasks do: [ :task | task update ].
+	aTaskList tasks do: [ :task | task modified ifTrue: [task persistAndUpdate ]].
 	aTaskList sync
 ]
 

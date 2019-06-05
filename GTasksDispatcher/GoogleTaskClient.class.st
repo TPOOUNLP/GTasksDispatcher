@@ -61,8 +61,7 @@ GoogleTaskClient class >> new [
 
 { #category : #'as yet unclassified' }
 GoogleTaskClient class >> new: aKey secret: aSecretKey redirectUrl: anUrl [
-	self instance ifNil: [ self instance: (GoogleTaskClient basicNew initialize: aKey secret: aSecretKey redirectUrl: anUrl)
-].
+self instance: (GoogleTaskClient basicNew initialize: aKey secret: aSecretKey redirectUrl: anUrl).
 	^ self instance
 ]
 
