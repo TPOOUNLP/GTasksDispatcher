@@ -8,20 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-CredentialsGithub >> credentials [
-^NeoJSONReader fromString:
-									'{
-										"mendiccini" : {
-											"secret" : "secret",
-											"token" : "token"
-										},
-										"perez" : { 
-											"secret" : "secret",
-											"token" : "token"
-										} }'.
-]
-
-{ #category : #accessing }
 CredentialsGithub >> credentialsTo: anUser [
 	|credential |
 	credential:= credentials at: 'mendiccini'.
