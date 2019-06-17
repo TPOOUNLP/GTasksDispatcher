@@ -21,7 +21,7 @@ OffLineTaskList class >> instance: anObject [
 OffLineTaskList >> deleteTask: aTask inTaskList: aTaskList [
 	(aTaskList getTask: aTask ) active:false. 
 
-	aTask isPersistant ifFalse: [ super deleteTask: aTask inTaskList: aTaskList ]
+	aTask isPersist ifFalse: [ super deleteTask: aTask inTaskList: aTaskList ]
 		
 ]
 

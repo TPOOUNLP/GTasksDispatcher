@@ -77,7 +77,7 @@ Task >> initialize [
 ]
 
 { #category : #accessing }
-Task >> isPersistant [
+Task >> isPersist [
 	^ self id isNotNil
 ]
 
@@ -105,7 +105,7 @@ Task >> notes: anObject [
 
 { #category : #accessing }
 Task >> persist [
-	self isPersistant ifFalse: [ ClientManager new insertTask: self inTaskList: self taskList ]
+	self isPersist ifFalse: [ ClientManager new insertTask: self inTaskList: self taskList ]
 ]
 
 { #category : #accessing }
@@ -172,7 +172,7 @@ Task >> title: anObject [
 
 { #category : #accessing }
 Task >> update [
-	self isPersistant
+	self isPersist
 		ifTrue: [ GoogleTaskClient new updateTask: self inTaskList: self taskList ]
 ]
 

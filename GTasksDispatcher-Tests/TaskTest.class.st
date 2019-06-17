@@ -18,7 +18,7 @@ TaskTest >> agenda: anObject [
 TaskTest >> setUp [
 	| credentials myCredential |
 	credentials := UsersCredentials new.
-	myCredential := credentials credentialsTo: 'me'.
+	myCredential := credentials getMyCredentials.
 	googleTaskClient := GoogleTaskClient
 		new: myCredential key
 		secret: myCredential secret
@@ -35,7 +35,7 @@ TaskTest >> testAbmTaskOffLine [
 	| taskList task |
 	taskList := TaskList offLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
-	self deny: task isPersistant.
+	self deny: task isPersist.
 	task title: 'Test'.
 	self assert: task title = 'Test'.
 	task remove.
@@ -47,7 +47,7 @@ TaskTest >> testAbmTaskOnLine [
 	| taskList task|
 	taskList := TaskList onLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
-	self assert: task isPersistant.
+	self assert: task isPersist.
 	task title: 'Test'.
 	self assert: task title = 'Test'.
 	task remove
@@ -59,7 +59,7 @@ TaskTest >> testAbmTaskOnLineOffLineToOnline [
 	| taskList task |
 	taskList := TaskList onLine: 'taskList'.
 	task := Task title: 'unaTarea' andTaskList: taskList.
-	self assert: task isPersistant.
+	self assert: task isPersist.
 	task title: 'Test'.
 	self assert: task title = 'Test'.
 	task remove

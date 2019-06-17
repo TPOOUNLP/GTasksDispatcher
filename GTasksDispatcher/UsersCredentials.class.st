@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-UsersCredentials >> credentialsTo: anUser [
+UsersCredentials >> getMyCredentials [
 	|credential |
 	credential:= credentials at: 'mendiccini'.
 	^ UserCredential key: (credential at: 'key') secret: (credential at: 'secret') redirectUrl: (credential at: 'redirectUrl')
@@ -27,8 +27,8 @@ credentials:= NeoJSONReader fromString:
 											"redirectUrl": "http://localhost:8080/sso-google-callback"
 										},
 										"perez" : { 
-											"key" : "868363521190-htu9hve7g1l0215e8ahs48s0uerhompe.apps.googleusercontent.com",
-											"secret" : "nYVZIR37unJV8QoH7mPAQ9F0",
-											"redirectUrl": "http://localhost:8100/sso-google-callback"
+											"key" : "aKey",
+											"secret" : "aSecret",
+											"redirectUrl": "http://localhost:8080/sso-google-callback"
 										} }'.
 ]

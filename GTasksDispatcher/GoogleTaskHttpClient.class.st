@@ -83,7 +83,7 @@ GoogleTaskHttpClient >> getTaskList: aTasklistId [
 GoogleTaskHttpClient >> initialize [
 	| consumer authenticator credentials myCredential|
 credentials := UsersCredentials new.
-myCredential := credentials credentialsTo: 'me'.
+myCredential := credentials getMyCredentials.
 	consumer := ZnOAuth2ConsumerData
 		key: myCredential key
 		secret: myCredential secret

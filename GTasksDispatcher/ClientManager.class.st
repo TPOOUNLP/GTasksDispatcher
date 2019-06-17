@@ -79,7 +79,7 @@ ClientManager >> getTaskLists [
 ClientManager >> initialize [
 |credentials myCredential|
 credentials := UsersCredentials new.
-myCredential := credentials credentialsTo: 'me'.
+myCredential := credentials getMyCredentials.
 	self
 		server:
 			(GoogleTaskHttpClient
