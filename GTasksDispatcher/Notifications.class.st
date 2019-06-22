@@ -37,27 +37,19 @@ Notifications >> initialize [
 	| actual next merge googleTaskClient newList|
 
 	googleTaskClient := (MySession new) googleTaskClient .
-	"Armo un diccionario (1) con los campos ids y updates de la nube"
 	actual := self getListsIdsAndUpdates: googleTaskClient.
 	
-"[ 4 timesRepeat: [  	
-	50 second asDelay wait."
-	"Armo un diccionario (2) con los campos ids y updates de la nube"
+[ 4 timesRepeat: [  	
+	50 second asDelay wait.
 	next:= Dictionary new.
 	next := self getListsIdsAndUpdates: googleTaskClient.
-	
-	"Comparo diccionar 1 y 2 y armo otro"
 	merge := self merge: actual with: next.
-	
-	"Con las keys (ids) del diccionario merge, voy a la nube y traigo toda la info de las listas"
 	newList:= self getNewInformation: merge from: googleTaskClient.
 	self actualizeAllInstances: newList.
-	
 	newList := String new.
 	actual:= next.
 	next:= String new.
-"]	] forkAt: Processor userBackgroundPriority"
-
+]	] forkAt: Processor userBackgroundPriority
 ]
 
 { #category : #'as yet unclassified' }
