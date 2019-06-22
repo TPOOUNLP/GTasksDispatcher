@@ -14,11 +14,10 @@ Notifications >> getListsIdsAndUpdates: googleTaskClient [
 
 { #category : #'as yet unclassified' }
 Notifications >> getNewInformation: merge from: googleTaskClient [
-|actualList list|
-actualList := Set new.
-list:= googleTaskClient sync.
-list do: [:each| (merge keys includes: each id) ifTrue: [actualList add: each]].
-^actualList.
+|list|
+list:= googleTaskClient manager getTaskLists.
+^list select: [:each | merge keys includes: each id].
+
 ]
 
 { #category : #'as yet unclassified' }

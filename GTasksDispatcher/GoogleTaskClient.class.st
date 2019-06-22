@@ -120,7 +120,7 @@ GoogleTaskClient >> getIdsAndUpdates: aTaskLists [
 
 { #category : #accessing }
 GoogleTaskClient >> getTaskListById: anId [
-	^ self taskLists detect: [ :taskList | taskList id = anId  ] ifNone: [ nil ]
+	^ self taskLists detect: [ :taskList | taskList id = anId ] ifNone: [ nil ]
 ]
 
 { #category : #accessing }
