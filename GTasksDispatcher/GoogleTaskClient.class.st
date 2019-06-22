@@ -110,6 +110,15 @@ GoogleTaskClient >> getIds:aTaskLists [
 ]
 
 { #category : #accessing }
+GoogleTaskClient >> getIdsAndUpdates: aTaskLists [
+	| dictionary |
+	dictionary := Dictionary new.
+	aTaskLists
+		do: [ :taskList | dictionary at: taskList id put: taskList updated ].
+	^ dictionary
+]
+
+{ #category : #accessing }
 GoogleTaskClient >> getTaskListById: anId [
 	^ self taskLists detect: [ :taskList | taskList id = anId  ] ifNone: [ nil ]
 ]
