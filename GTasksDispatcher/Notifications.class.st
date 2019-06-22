@@ -8,6 +8,18 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+Notifications >> actualizeAllInstances: newList [
+	| newListIds pos |
+	newListIds := newList collect: [ :each | each id ].
+	pos := 1.
+	TaskList allInstancesDo: [ :instance | 
+			(newListIds includes: instance id)
+				ifTrue: [ (TaskList allInstances at: pos)
+						setNewInformation: (newList detect: [ :list | list id = instance id ]) ].
+			pos := pos + 1 ]
+]
+
+{ #category : #'as yet unclassified' }
 Notifications >> getListsIdsAndUpdates: googleTaskClient [
 	^googleTaskClient getIdsAndUpdates: googleTaskClient manager getTaskLists
 ]
@@ -22,18 +34,14 @@ list:= googleTaskClient manager getTaskLists.
 
 { #category : #'as yet unclassified' }
 Notifications >> initialize [
-	| credentials myCredential actual next merge googleTaskClient newList |
-	credentials := UsersCredentials new.
-	myCredential := credentials getMyCredentials.
-	googleTaskClient := GoogleTaskClient
-		new: myCredential key
-		secret: myCredential secret
-		redirectUrl: myCredential redirectUrl.
-	
+	| actual next merge googleTaskClient newList|
+
+	googleTaskClient := (MySession new) googleTaskClient .
 	"Armo un diccionario (1) con los campos ids y updates de la nube"
 	actual := self getListsIdsAndUpdates: googleTaskClient.
-"[ 4 timesRepeat: [  	"
-			
+	
+"[ 4 timesRepeat: [  	
+	50 second asDelay wait."
 	"Armo un diccionario (2) con los campos ids y updates de la nube"
 	next:= Dictionary new.
 	next := self getListsIdsAndUpdates: googleTaskClient.
@@ -43,14 +51,13 @@ Notifications >> initialize [
 	
 	"Con las keys (ids) del diccionario merge, voy a la nube y traigo toda la info de las listas"
 	newList:= self getNewInformation: merge from: googleTaskClient.
+	self actualizeAllInstances: newList.
 	
-	"
-	ACA DEBEMOS AVISAR A LAS TAREAS QUE ESTAN SIENDO USADAS QUE CAMBIARON
-	newList do:[:each| ].!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	newList := String new.
 	actual:= next.
-"]	] forkAt: Processor userBackgroundPriority
+	next:= String new.
+"]	] forkAt: Processor userBackgroundPriority"
 
-Task title: x andTaskList: (TaskList onLine: 'listaUno')."
 ]
 
 { #category : #'as yet unclassified' }
