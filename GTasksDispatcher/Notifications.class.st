@@ -14,9 +14,10 @@ Notifications >> getListsIdsAndUpdates: googleTaskClient [
 
 { #category : #'as yet unclassified' }
 Notifications >> getNewInformation: merge from: googleTaskClient [
-|actualList|
+|actualList list|
 actualList := Set new.
-merge keysDo: [ :each | actualList add: (googleTaskClient getTaskListById: each) ].
+list:= googleTaskClient sync.
+list do: [:each| (merge keys includes: each id) ifTrue: [actualList add: each]].
 ^actualList.
 ]
 
@@ -44,8 +45,9 @@ Notifications >> initialize [
 	"Con las keys (ids) del diccionario merge, voy a la nube y traigo toda la info de las listas"
 	newList:= self getNewInformation: merge from: googleTaskClient.
 	
-	
-
+	"
+	ACA DEBEMOS AVISAR A LAS TAREAS QUE ESTAN SIENDO USADAS QUE CAMBIARON
+	newList do:[:each| ].!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	actual:= next.
 "]	] forkAt: Processor userBackgroundPriority
 

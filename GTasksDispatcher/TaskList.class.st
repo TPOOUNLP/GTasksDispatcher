@@ -134,6 +134,17 @@ TaskList >> selfLink: anObject [
 ]
 
 { #category : #accessing }
+TaskList >> setNewInformation: aTaskList [
+
+self tasks: aTaskList tasks.
+self title: aTaskList title.
+self selfLink: aTaskList selfLink.
+self updated: aTaskList updated.
+self state: aTaskList state.
+self active: aTaskList active
+]
+
+{ #category : #accessing }
 TaskList >> setTitle: aTitle [
 	title:= aTitle
 ]
