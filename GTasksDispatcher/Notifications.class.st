@@ -45,10 +45,7 @@ Notifications >> initialize [
 	newList:= self getNewInformation: merge from: googleTaskClient.
 	
 	
-	
-	
-	actual:= Dictionary new.
-	actual:= self actualizeActual: newList.
+
 	actual:= next.
 "]	] forkAt: Processor userBackgroundPriority
 
