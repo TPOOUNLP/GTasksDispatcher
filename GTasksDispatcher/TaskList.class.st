@@ -99,7 +99,7 @@ TaskList >> initialize [
 ]
 
 { #category : #accessing }
-TaskList >> isPersist [
+TaskList >> isPersistent [
 	^self id isNotNil 
 ]
 

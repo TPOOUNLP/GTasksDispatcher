@@ -21,7 +21,7 @@ OnLineTaskList class >> instance: anObject [
 OnLineTaskList >> addTask: aTask inTaskList: aTaskList [
 	"si la task no esta persistida en alguna taskList, se agrega"
 
-	aTask isPersist
+	aTask isPersistent
 		ifTrue: [ ^ aTaskList addDeniedTask ]
 		ifFalse: [ aTask persist.
 			super addTask: aTask inTaskList: aTaskList ]
@@ -53,7 +53,7 @@ OnLineTaskList >> removeTaskList: aTaskList [
 
 { #category : #'as yet unclassified' }
 OnLineTaskList >> sync: aTaskList [
-	aTaskList isPersist ifTrue: [ self updateTaskList: aTaskList andTitle: aTaskList title ] 
+	aTaskList isPersistent ifTrue: [ self updateTaskList: aTaskList andTitle: aTaskList title ] 
 		ifFalse: [ ClientManager new addTaskList: aTaskList ].
 	self syncTasks: aTaskList.
 	GoogleTaskClient new addTaskList: aTaskList
