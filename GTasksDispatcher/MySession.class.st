@@ -9,13 +9,16 @@ Class {
 
 { #category : #'initialize-release' }
 MySession >> googleTaskClient [
-	| credentials|
+	| credentials googleTaskClient |
 	credentials := UsersCredentials new.
 	myCredential := credentials getMyCredentials.
-	^GoogleTaskClient
+	googleTaskClient := GoogleTaskClient
 		new: myCredential key
 		secret: myCredential secret
 		redirectUrl: myCredential redirectUrl.
+	
+	googleTaskClient taskLists: googleTaskClient manager getTaskLists .
+	^googleTaskClient 
 ]
 
 { #category : #'initialize-release' }

@@ -133,6 +133,11 @@ Task >> selfLink: anObject [
 ]
 
 { #category : #accessing }
+Task >> setNewInformation: aTask [
+	self title: aTask title.
+]
+
+{ #category : #accessing }
 Task >> setTitle:aTitle [
 "accesor de uso interno"
 	title:=aTitle .
