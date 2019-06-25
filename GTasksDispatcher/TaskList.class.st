@@ -80,6 +80,11 @@ TaskList >> getTaskById: aTask [
 ]
 
 { #category : #accessing }
+TaskList >> getUpdatedById [
+	^(self id -> self updated)
+]
+
+{ #category : #accessing }
 TaskList >> id [
 	^ id
 ]

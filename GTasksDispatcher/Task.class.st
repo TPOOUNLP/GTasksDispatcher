@@ -182,6 +182,11 @@ Task >> update [
 ]
 
 { #category : #accessing }
+Task >> updateById [
+	^(self id -> self updated)
+]
+
+{ #category : #accessing }
 Task >> updated [
 	^ updated
 ]

@@ -110,11 +110,10 @@ GoogleTaskClient >> getIds:aTaskLists [
 ]
 
 { #category : #accessing }
-GoogleTaskClient >> getIdsAndUpdates: aTaskLists [
+GoogleTaskClient >> getListsUpdatesByIds: aTaskLists [
 	| dictionary |
 	dictionary := Dictionary new.
-	aTaskLists
-		do: [ :taskList | dictionary at: taskList id put: taskList updated ].
+	aTaskLists do: [ :taskList | dictionary add: taskList getUpdatedById ].
 	^ dictionary
 ]
 
