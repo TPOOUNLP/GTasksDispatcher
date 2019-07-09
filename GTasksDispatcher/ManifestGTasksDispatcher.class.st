@@ -9,5 +9,5 @@ Class {
 
 { #category : #'code-critics' }
 ManifestGTasksDispatcher class >> ruleRBConsistencyCheckRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#Notifications #notifications #false)) #'2019-06-18T23:12:09.626995-03:00') )
+	^ #(#(#(#RGMethodDefinition #(#Updater #notifications #false)) #'2019-06-18T23:12:09.626995-03:00') )
 ]
