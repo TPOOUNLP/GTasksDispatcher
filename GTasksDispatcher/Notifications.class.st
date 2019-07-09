@@ -7,6 +7,27 @@ Class {
 	#category : #GTasksDispatcher
 }
 
+{ #category : #accessing }
+Notifications >> execute [
+	|   googleTaskClient updatedTasksDictionary mergeFromActualAndUpdatedLists updatedListsDictionary actualListsDictionary actualTasksDictionary|
+
+	googleTaskClient := (MySession new) googleTaskClient .
+	actualTasksDictionary := self getTasksUpdatesByIds: googleTaskClient taskLists.
+	actualListsDictionary := self getListsUpdatesByIds: googleTaskClient.
+"[ 4 timesRepeat: [  	"
+	"50 second asDelay wait."
+	Transcript show: 'Debes modificar alguna tarea! :)'.
+	updatedListsDictionary := self getListsUpdatesByIds: googleTaskClient.
+	mergeFromActualAndUpdatedLists := self merge: actualListsDictionary with: updatedListsDictionary.
+	updatedTasksDictionary:=self getUpdatedTasks: mergeFromActualAndUpdatedLists from: googleTaskClient.
+	mergeFromActualAndUpdatedLists := self merge: actualTasksDictionary with: updatedTasksDictionary.
+	self updateInformation: mergeFromActualAndUpdatedLists from: googleTaskClient.
+	actualListsDictionary:= updatedListsDictionary. updatedListsDictionary := nil.
+	actualTasksDictionary:= updatedTasksDictionary. updatedTasksDictionary := nil.
+	mergeFromActualAndUpdatedLists := nil.
+"]	] forkAt: Processor userBackgroundPriority"
+]
+
 { #category : #'as yet unclassified' }
 Notifications >> getListsUpdatesByIds: googleTaskClient [
 	^googleTaskClient getListsUpdatesByIds: googleTaskClient manager getTaskLists
@@ -23,16 +44,6 @@ Notifications >> getTasksUpdatesByIds: lists [
 ]
 
 { #category : #'as yet unclassified' }
-Notifications >> getUpdatedInformation: merge from: googleTaskClient [
-|list|
-list:= Set new.
-googleTaskClient manager getTaskLists do: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [list add: task]]].
-
-^list.
-
-]
-
-{ #category : #'as yet unclassified' }
 Notifications >> getUpdatedTasks: merge from: googleTaskClient [
 |tasks cloudLists|
 tasks:= Dictionary new.
@@ -43,34 +54,7 @@ merge keysDo: [ :key |  cloudLists do: [ :taskList | (taskList id = key) ifTrue:
 
 { #category : #accessing }
 Notifications >> initialize [
-	|   googleTaskClient updatedTasks updatedTasksUpdatesByIds mergeFromActualAndNextLists nextListsUpdatesByIds actualListsUpdatesByIds actualTasksUpdatesByIds|
-
-	googleTaskClient := (MySession new) googleTaskClient .
-	
-	actualTasksUpdatesByIds := self getTasksUpdatesByIds: googleTaskClient taskLists.
-	actualListsUpdatesByIds := self getListsUpdatesByIds: googleTaskClient.
-	
-[ 4 timesRepeat: [  	
-	"50 second asDelay wait."
-	Transcript show: 'Debes modificar alguna tarea! :)'.
-	nextListsUpdatesByIds := self getListsUpdatesByIds: googleTaskClient.
-	mergeFromActualAndNextLists := self merge: actualListsUpdatesByIds with: nextListsUpdatesByIds.
-
-	updatedTasksUpdatesByIds:=self getUpdatedTasks: mergeFromActualAndNextLists from: googleTaskClient .
-	mergeFromActualAndNextLists:= self merge: actualTasksUpdatesByIds with: updatedTasksUpdatesByIds .
-	
-	updatedTasks:= self getUpdatedInformation: mergeFromActualAndNextLists from: googleTaskClient.
-	
-	self updateAllInstances: updatedTasks.
-	actualListsUpdatesByIds:= nextListsUpdatesByIds.
-	actualTasksUpdatesByIds:= updatedTasksUpdatesByIds.
-	
-	
-	updatedTasks := nil.
-	nextListsUpdatesByIds := nil.
-	updatedTasksUpdatesByIds := nil.
-	mergeFromActualAndNextLists := nil.
-]	] forkAt: Processor userBackgroundPriority
+	self execute.
 ]
 
 { #category : #'as yet unclassified' }
@@ -95,5 +79,14 @@ Notifications >> updateAllInstances: newList [
 	instances.
 		
 
+
+]
+
+{ #category : #'as yet unclassified' }
+Notifications >> updateInformation: merge from: googleTaskClient [
+|list|
+list:= Set new.
+googleTaskClient manager getTaskLists do: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [list add: task]]].
+self updateAllInstances: list
 
 ]

@@ -19,10 +19,7 @@ TaskTest >> setUp [
 	| credentials myCredential |
 	credentials := UsersCredentials new.
 	myCredential := credentials getMyCredentials.
-	googleTaskClient := GoogleTaskClient
-		new: myCredential key
-		secret: myCredential secret
-		redirectUrl: myCredential redirectUrl
+	googleTaskClient := (MySession new) googleTaskClient .
 ]
 
 { #category : #'as yet unclassified' }
