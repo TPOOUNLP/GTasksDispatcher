@@ -128,6 +128,11 @@ GoogleTaskClient >> getTaskListByTitle: anTitle [
 ]
 
 { #category : #accessing }
+GoogleTaskClient >> getTaskLists [
+	^ self manager getTaskLists
+]
+
+{ #category : #accessing }
 GoogleTaskClient >> initialize [
 	self taskLists: OrderedCollection new.
 	self manager: ClientManager new. 
@@ -167,7 +172,7 @@ GoogleTaskClient >> manager: anObject [
 GoogleTaskClient >> sync [
 	| ids idsnube |
 	ids := self getIds: self taskLists.
-	idsnube := self getIds: self manager getTaskLists.
+	idsnube := self getIds: self getTaskLists.
 	(self manager getTaskLists reject: [ :taskList | ids includes: taskList id ])
 		do: [ :taskListsNotLoad | self taskLists add: taskListsNotLoad ].
 	self taskLists: (self taskLists select: [ :tasklist | idsnube includes: tasklist id ]).

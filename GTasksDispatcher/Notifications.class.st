@@ -14,7 +14,7 @@ Notifications >> execute [
 	googleTaskClient := (MySession new) googleTaskClient .
 	actualTasksDictionary := self getTasksUpdatesByIds: googleTaskClient taskLists.
 	actualListsDictionary := self getListsUpdatesByIds: googleTaskClient.
-"[ 4 timesRepeat: [  	"
+[ 4 timesRepeat: [  	
 	"50 second asDelay wait."
 	Transcript show: 'Debes modificar alguna tarea! :)'.
 	updatedListsDictionary := self getListsUpdatesByIds: googleTaskClient.
@@ -25,12 +25,12 @@ Notifications >> execute [
 	actualListsDictionary:= updatedListsDictionary. updatedListsDictionary := nil.
 	actualTasksDictionary:= updatedTasksDictionary. updatedTasksDictionary := nil.
 	mergeFromActualAndUpdatedLists := nil.
-"]	] forkAt: Processor userBackgroundPriority"
+]	] forkAt: Processor userBackgroundPriority
 ]
 
 { #category : #'as yet unclassified' }
 Notifications >> getListsUpdatesByIds: googleTaskClient [
-	^googleTaskClient getListsUpdatesByIds: googleTaskClient manager getTaskLists
+	^googleTaskClient getListsUpdatesByIds: googleTaskClient getTaskLists
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,7 +47,7 @@ Notifications >> getTasksUpdatesByIds: lists [
 Notifications >> getUpdatedTasks: merge from: googleTaskClient [
 |tasks cloudLists|
 tasks:= Dictionary new.
-cloudLists:= googleTaskClient manager getTaskLists.
+cloudLists:= googleTaskClient getTaskLists.
 merge keysDo: [ :key |  cloudLists do: [ :taskList | (taskList id = key) ifTrue: [ taskList tasks do:[:task| tasks at: task id put: task updated] ] ]].
 ^tasks.
 ]
@@ -76,8 +76,6 @@ Notifications >> updateAllInstances: newList [
 	instances:= 	Task allInstances .
 	instancesToUpdate:=instances select:[:each | newListIds includes: each id].
 	instancesToUpdate do:[:each| each setNewInformation: (newList detect:[ :task| task id = each id])].
-	instances.
-		
 
 
 ]
@@ -86,7 +84,7 @@ Notifications >> updateAllInstances: newList [
 Notifications >> updateInformation: merge from: googleTaskClient [
 |list|
 list:= Set new.
-googleTaskClient manager getTaskLists do: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [list add: task]]].
+googleTaskClient getTaskLists do: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [list add: task]]].
 self updateAllInstances: list
 
 ]

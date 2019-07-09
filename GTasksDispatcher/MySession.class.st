@@ -17,7 +17,7 @@ MySession >> googleTaskClient [
 		secret: myCredential secret
 		redirectUrl: myCredential redirectUrl.
 	
-	googleTaskClient taskLists: googleTaskClient manager getTaskLists .
+	googleTaskClient taskLists: googleTaskClient getTaskLists .
 	^googleTaskClient 
 ]
 
