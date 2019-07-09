@@ -38,47 +38,45 @@ Updater >> actualTasksDictionary: anObject [
 { #category : #accessing }
 Updater >> execute [
 	googleTaskClient := (MySession new) googleTaskClient .
-	actualTasksDictionary := self getTasksUpdatesByIds: googleTaskClient taskLists.
-	actualListsDictionary := self getListsUpdatesByIds: googleTaskClient.
+	actualTasksDictionary := self getTasksUpdatesByIds.
+	actualListsDictionary := self getListsUpdatesByIds.
 [ 4 timesRepeat: [  	
 	"50 second asDelay wait."
 	Transcript show: 'Debes modificar alguna tarea! :)'.
-	updatedListsDictionary := self getListsUpdatesByIds: googleTaskClient.
+	updatedListsDictionary := self getListsUpdatesByIds.
 	self merge: actualListsDictionary with: updatedListsDictionary.
-	updatedTasksDictionary:=self getUpdatedTasks: mergeFromActualAndUpdatedLists from: googleTaskClient.
+	self getUpdatedTasks.
 	self merge: actualTasksDictionary with: updatedTasksDictionary.
-	self updateInformation: mergeFromActualAndUpdatedLists from: googleTaskClient.
+	self updateInformation.
 	self restart.
 ]	] forkAt: Processor userBackgroundPriority
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getListsUpdatesByIds: googleTaskClient [
-	^googleTaskClient getListsUpdatesByIds: googleTaskClient getTaskLists
+Updater >> getListsUpdatesByIds [
+	^ googleTaskClient getListsUpdatesByIds: googleTaskClient getTaskLists
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getTasksUpdatesByIds: lists [
+Updater >> getTasksUpdatesByIds [
 	
 	|dictionary|
 	dictionary := Dictionary new.
-	"lists do:[:list| list tasks do:[:task| dictionary at: task id put: task updated]]."
-	lists do:[:list| list tasks do:[:task| dictionary add: task updateById]].
+	googleTaskClient taskLists do:[:list| list tasks do:[:task| dictionary add: task updateById]].
 	^dictionary.
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getUpdatedTasks: merge from: googleTaskClient [
-|tasks cloudLists|
-tasks:= Dictionary new.
+Updater >> getUpdatedTasks [
+| cloudLists|
+updatedTasksDictionary:= Dictionary new.
 cloudLists:= googleTaskClient getTaskLists.
-merge keysDo: [ :key |  cloudLists do: [ :taskList | (taskList id = key) ifTrue: [ taskList tasks do:[:task| tasks at: task id put: task updated] ] ]].
-^tasks.
+mergeFromActualAndUpdatedLists keysDo: [ :key |  cloudLists do: [ :taskList | (taskList id = key) ifTrue: [ taskList tasks do:[:task| updatedTasksDictionary at: task id put: task updated] ] ]].
 ]
 
 { #category : #accessing }
 Updater >> googleTaskClient [
-	^ googleTaskClient
+	^ googleTaskClient .
 ]
 
 { #category : #accessing }
@@ -134,21 +132,10 @@ Updater >> updateAllInstances: newList [
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> updateInformation: merge [
-"|list|
-list:= Set new.
-googleTaskClient getTaskLists do: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [list add: task]]].
-self updateAllInstances: list
-"
-
-self updateAllInstances: (googleTaskClient getTaskLists collect: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [task]]])
-]
-
-{ #category : #'as yet unclassified' }
-Updater >> updateInformation: merge from: googleTaskClient [
+Updater >> updateInformation [
 |list|
 list:= Set new.
-googleTaskClient getTaskLists do: [:taskList | taskList tasks do:[:task| (merge keys includes: task id) ifTrue: [list add: task]]].
+googleTaskClient getTaskLists do: [:taskList | taskList tasks do:[:task| (mergeFromActualAndUpdatedLists keys includes: task id) ifTrue: [list add: task]]].
 self updateAllInstances: list
 
 ]
