@@ -54,16 +54,12 @@ Updater >> execute [
 
 { #category : #'as yet unclassified' }
 Updater >> getListsUpdatesByIds [
-	^ googleTaskClient getListsUpdatesByIds: googleTaskClient getTaskLists
+	^ googleTaskClient getListsUpdatesByIds
 ]
 
 { #category : #'as yet unclassified' }
 Updater >> getTasksUpdatesByIds [
-	
-	|dictionary|
-	dictionary := Dictionary new.
-	googleTaskClient taskLists do:[:list| list tasks do:[:task| dictionary add: task updateById]].
-	^dictionary.
+	^ googleTaskClient getTasksUpdatesByIds.
 ]
 
 { #category : #'as yet unclassified' }

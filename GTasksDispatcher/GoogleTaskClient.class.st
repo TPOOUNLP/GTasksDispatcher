@@ -110,10 +110,10 @@ GoogleTaskClient >> getIds:aTaskLists [
 ]
 
 { #category : #accessing }
-GoogleTaskClient >> getListsUpdatesByIds: aTaskLists [
+GoogleTaskClient >> getListsUpdatesByIds [
 	| dictionary |
 	dictionary := Dictionary new.
-	aTaskLists do: [ :taskList | dictionary add: taskList getUpdatedById ].
+	(self getTaskLists) do: [ :taskList | dictionary add: taskList getUpdatedById ].
 	^ dictionary
 ]
 
@@ -130,6 +130,14 @@ GoogleTaskClient >> getTaskListByTitle: anTitle [
 { #category : #accessing }
 GoogleTaskClient >> getTaskLists [
 	^ self manager getTaskLists
+]
+
+{ #category : #accessing }
+GoogleTaskClient >> getTasksUpdatesByIds [
+	| dictionary |
+	dictionary := Dictionary new.
+	(self getTaskLists) do:[:list| list tasks do:[:task| dictionary add: task updateById]].
+	^dictionary.
 ]
 
 { #category : #accessing }

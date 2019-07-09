@@ -100,7 +100,6 @@ Task >> notes [
 { #category : #accessing }
 Task >> notes: anObject [
 	notes := anObject.
-	self taskList updateTask: self
 ]
 
 { #category : #accessing }
@@ -135,6 +134,9 @@ Task >> selfLink: anObject [
 { #category : #accessing }
 Task >> setNewInformation: aTask [
 	self title: aTask title.
+	self updated: aTask updated.
+	self notes: aTask notes
+	
 ]
 
 { #category : #accessing }
@@ -194,5 +196,4 @@ Task >> updated [
 { #category : #accessing }
 Task >> updated: anObject [
 	updated := anObject.
-	self taskList updateTask: self
 ]
