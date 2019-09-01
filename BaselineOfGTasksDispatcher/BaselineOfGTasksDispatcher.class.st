@@ -20,11 +20,8 @@ BaselineOfGTasksDispatcher >> baseline: spec [
 						repository: 'http://mc.stfx.eu/ZincHTTPComponents';
 						loads: #('Core' 'SSO' 'REST' 'WebSocket');
 						versionString: #stable ];
-				project: 'Neo JSON' with: [
-			spec
-				className: 'ConfigurationOfNeoJSON';
-				versionString: #'stable';
-				repository: 'github://svenvc/NeoJSON/repository']].
+	baseline: 'NeoJSON'
+	with: [ spec repository: 'github://svenvc/NeoJSON/repository']].
 				 
 ]
 
