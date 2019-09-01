@@ -1,5 +1,5 @@
 Class {
-	#name : #Updater,
+	#name : #GetTasksUpdates,
 	#superclass : #Object,
 	#instVars : [
 		'googleTaskClient'
@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #accessing }
-Updater >> execute [
+GetTasksUpdates >> execute [
 |actualListsDictionary updatedListsDictionary actualTasksDictionary updatedTasksDictionary mergeFromActualAndUpdatedLists|
 	googleTaskClient := (MySession new) googleTaskClient .
 	actualTasksDictionary := self getTasksUpdatesByIds.
 	actualListsDictionary := self getListsUpdatesByIds.
-"[ 4 timesRepeat: ["  	
-	"50 second asDelay wait."
+[ 4 timesRepeat: [ 	
+	50 second asDelay wait.
 	Transcript show: 'Debes modificar alguna tarea! :)'.
 	updatedListsDictionary := self getListsUpdatesByIds.
 	mergeFromActualAndUpdatedLists:= self merge: actualListsDictionary with: updatedListsDictionary.
@@ -29,21 +29,21 @@ Updater >> execute [
 	actualTasksDictionary:= updatedTasksDictionary.
 	updatedTasksDictionary := nil.
 	mergeFromActualAndUpdatedLists := nil.
-"]	] forkAt: Processor userBackgroundPriority"
+]	] forkAt: Processor userBackgroundPriority
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getListsUpdatesByIds [
+GetTasksUpdates >> getListsUpdatesByIds [
 	^ googleTaskClient getListsUpdatesByIds
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getTasksUpdatesByIds [
+GetTasksUpdates >> getTasksUpdatesByIds [
 	^ googleTaskClient getTasksUpdatesByIds.
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getUpdatedTasks: mergeFromActualAndUpdatedLists [
+GetTasksUpdates >> getUpdatedTasks: mergeFromActualAndUpdatedLists [
 | cloudLists updatedTasksDictionary|
 updatedTasksDictionary:= Dictionary new.
 cloudLists:= googleTaskClient getTaskLists.
@@ -52,22 +52,22 @@ mergeFromActualAndUpdatedLists keysDo: [ :key |  cloudLists do: [ :taskList | (t
 ]
 
 { #category : #accessing }
-Updater >> googleTaskClient [
+GetTasksUpdates >> googleTaskClient [
 	^ googleTaskClient .
 ]
 
 { #category : #accessing }
-Updater >> googleTaskClient: anObject [
+GetTasksUpdates >> googleTaskClient: anObject [
 	googleTaskClient := anObject
 ]
 
 { #category : #accessing }
-Updater >> initialize [
+GetTasksUpdates >> initialize [
 	self execute.
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> merge: actual with: next [
+GetTasksUpdates >> merge: actual with: next [
 |mergeFromActualAndUpdatedLists|
 mergeFromActualAndUpdatedLists:= Dictionary new.
 	next keysDo: [ :key | 
@@ -78,7 +78,7 @@ mergeFromActualAndUpdatedLists:= Dictionary new.
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> updateAllInstances: newList [
+GetTasksUpdates >> updateAllInstances: newList [
 | newListIds instances instancesToUpdate|
 	newListIds := newList collect: [ :each | each id ].
 	instances:= 	Task allInstances .
@@ -89,7 +89,7 @@ Updater >> updateAllInstances: newList [
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> updateInformation: mergeFromActualAndUpdatedLists [
+GetTasksUpdates >> updateInformation: mergeFromActualAndUpdatedLists [
 |list|
 list:= Set new.
 googleTaskClient getTaskLists do: [:taskList | taskList tasks do:[:task| (mergeFromActualAndUpdatedLists keys includes: task id) ifTrue: [list add: task]]].
