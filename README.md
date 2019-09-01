@@ -2,12 +2,11 @@
 This project uses Google Tasks to decouple a "dispatcher" and "workker" roles.
 
 Add yours credentials to UsersCredentials >> initialize. For example:
-
 "username" : { 
-											"key" : "aKey",
-											"secret" : "aSecret",
-											"redirectUrl": "http://localhost:8080/sso-google-callback"
-										} }'.
+	"key" : "aKey",
+	"secret" : "aSecret",
+	"redirectUrl": "http://localhost:8080/sso-google-callback"
+} 
                     
 Then, set your username in UsersCredentials >> getMyCredentials
 
