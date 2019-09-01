@@ -15,3 +15,6 @@ Then, set your username in UsersCredentials >> getMyCredentials
 	credential:= credentials at: 'username'.
 	^ UserCredential key: (credential at: 'key') secret: (credential at: 'secret') redirectUrl: (credential at: 'redirectUrl')
 	
+To execute the project, you must run in a Playground:
+	Updater new 
+
