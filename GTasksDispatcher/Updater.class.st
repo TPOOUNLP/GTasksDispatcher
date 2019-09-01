@@ -2,12 +2,7 @@ Class {
 	#name : #Updater,
 	#superclass : #Object,
 	#instVars : [
-		'googleTaskClient',
-		'updatedTasksDictionary',
-		'mergeFromActualAndUpdatedLists',
-		'updatedListsDictionary',
-		'actualListsDictionary',
-		'actualTasksDictionary'
+		'googleTaskClient'
 	],
 	#classVars : [
 		'Instance'
@@ -16,40 +11,25 @@ Class {
 }
 
 { #category : #accessing }
-Updater >> actualListsDictionary [
-	^ actualListsDictionary
-]
-
-{ #category : #accessing }
-Updater >> actualListsDictionary: anObject [
-	actualListsDictionary := anObject
-]
-
-{ #category : #accessing }
-Updater >> actualTasksDictionary [
-	^ actualTasksDictionary
-]
-
-{ #category : #accessing }
-Updater >> actualTasksDictionary: anObject [
-	actualTasksDictionary := anObject
-]
-
-{ #category : #accessing }
 Updater >> execute [
+|actualListsDictionary updatedListsDictionary actualTasksDictionary updatedTasksDictionary mergeFromActualAndUpdatedLists|
 	googleTaskClient := (MySession new) googleTaskClient .
 	actualTasksDictionary := self getTasksUpdatesByIds.
 	actualListsDictionary := self getListsUpdatesByIds.
-[ 4 timesRepeat: [  	
+"[ 4 timesRepeat: ["  	
 	"50 second asDelay wait."
 	Transcript show: 'Debes modificar alguna tarea! :)'.
 	updatedListsDictionary := self getListsUpdatesByIds.
-	self merge: actualListsDictionary with: updatedListsDictionary.
-	self getUpdatedTasks.
-	self merge: actualTasksDictionary with: updatedTasksDictionary.
-	self updateInformation.
-	self restart.
-]	] forkAt: Processor userBackgroundPriority
+	mergeFromActualAndUpdatedLists:= self merge: actualListsDictionary with: updatedListsDictionary.
+	updatedTasksDictionary:= self getUpdatedTasks: mergeFromActualAndUpdatedLists.
+	mergeFromActualAndUpdatedLists:= self merge: actualTasksDictionary with: updatedTasksDictionary.
+	self updateInformation: mergeFromActualAndUpdatedLists.
+	actualListsDictionary:= updatedListsDictionary.
+	updatedListsDictionary := nil.
+	actualTasksDictionary:= updatedTasksDictionary.
+	updatedTasksDictionary := nil.
+	mergeFromActualAndUpdatedLists := nil.
+"]	] forkAt: Processor userBackgroundPriority"
 ]
 
 { #category : #'as yet unclassified' }
@@ -63,11 +43,12 @@ Updater >> getTasksUpdatesByIds [
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> getUpdatedTasks [
-| cloudLists|
+Updater >> getUpdatedTasks: mergeFromActualAndUpdatedLists [
+| cloudLists updatedTasksDictionary|
 updatedTasksDictionary:= Dictionary new.
 cloudLists:= googleTaskClient getTaskLists.
 mergeFromActualAndUpdatedLists keysDo: [ :key |  cloudLists do: [ :taskList | (taskList id = key) ifTrue: [ taskList tasks do:[:task| updatedTasksDictionary at: task id put: task updated] ] ]].
+^updatedTasksDictionary.
 ]
 
 { #category : #accessing }
@@ -87,33 +68,13 @@ Updater >> initialize [
 
 { #category : #'as yet unclassified' }
 Updater >> merge: actual with: next [
-
+|mergeFromActualAndUpdatedLists|
 mergeFromActualAndUpdatedLists:= Dictionary new.
 	next keysDo: [ :key | 
 			(actual includesKey: key)
 				ifFalse: [ mergeFromActualAndUpdatedLists at: key put: (next at: key) ];
 				ifTrue: [ ((actual at: key) = (next at: key)) ifFalse: [ mergeFromActualAndUpdatedLists at: key put: (next at:key) ]]].
 	^ mergeFromActualAndUpdatedLists.
-]
-
-{ #category : #accessing }
-Updater >> mergeFromActualAndUpdatedLists [
-	^ mergeFromActualAndUpdatedLists
-]
-
-{ #category : #accessing }
-Updater >> mergeFromActualAndUpdatedLists: anObject [
-	mergeFromActualAndUpdatedLists := anObject
-]
-
-{ #category : #'as yet unclassified' }
-Updater >> restart [ 
-	actualListsDictionary:= updatedListsDictionary.
-	updatedListsDictionary := nil.
-	actualTasksDictionary:= updatedTasksDictionary.
-	updatedTasksDictionary := nil.
-	mergeFromActualAndUpdatedLists := nil.
-
 ]
 
 { #category : #'as yet unclassified' }
@@ -128,30 +89,10 @@ Updater >> updateAllInstances: newList [
 ]
 
 { #category : #'as yet unclassified' }
-Updater >> updateInformation [
+Updater >> updateInformation: mergeFromActualAndUpdatedLists [
 |list|
 list:= Set new.
 googleTaskClient getTaskLists do: [:taskList | taskList tasks do:[:task| (mergeFromActualAndUpdatedLists keys includes: task id) ifTrue: [list add: task]]].
 self updateAllInstances: list
 
-]
-
-{ #category : #accessing }
-Updater >> updatedListsDictionary [
-	^ updatedListsDictionary
-]
-
-{ #category : #accessing }
-Updater >> updatedListsDictionary: anObject [
-	updatedListsDictionary := anObject
-]
-
-{ #category : #accessing }
-Updater >> updatedTasksDictionary [
-	^ updatedTasksDictionary
-]
-
-{ #category : #accessing }
-Updater >> updatedTasksDictionary: anObject [
-	updatedTasksDictionary := anObject
 ]
