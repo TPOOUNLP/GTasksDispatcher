@@ -1,7 +1,7 @@
 # GTasksDispatcher
 This project uses Google Tasks to decouple a "dispatcher" and "workker" roles.
 
-Add yours credentials to UsersCredentials >> initialize. For example:
+Add your credentials to UsersCredentials >> initialize. For example:
 
 "username" : { 
 	"key" : "aKey",
@@ -15,6 +15,6 @@ Then, set your username in UsersCredentials >> getMyCredentials
 	credential:= credentials at: 'username'.
 	^ UserCredential key: (credential at: 'key') secret: (credential at: 'secret') redirectUrl: (credential at: 'redirectUrl')
 	
-To execute the project, you must run in a Playground:
+To run the project, write the following in a Playground:
 	Updater new 
 
