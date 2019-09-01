@@ -2,6 +2,7 @@
 This project uses Google Tasks to decouple a "dispatcher" and "workker" roles.
 
 Add yours credentials to UsersCredentials >> initialize. For example:
+
 "username" : { 
 	"key" : "aKey",
 	"secret" : "aSecret",
