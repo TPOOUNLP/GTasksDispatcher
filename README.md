@@ -4,11 +4,11 @@ This project uses Google Tasks to decouple a "dispatcher" and "workker" roles.
 In Pharo go to Tools, Iceberg and click in new. From the options select clone from github.com and fill with the information below:  
 
 
-Owner name: TPOOUNLP
+	Owner name: TPOOUNLP
 
-Project name: GTasksDispatcher
+	Project name: GTasksDispatcher
 
-Protocol: HTTPS
+	Protocol: HTTPS
 
 When you finish cloning the project, right click in GTasksDispatcher and in Metacello select Install baseline of GTasksDisparcher (Default) to get all the dependences needed to run the project.
 
