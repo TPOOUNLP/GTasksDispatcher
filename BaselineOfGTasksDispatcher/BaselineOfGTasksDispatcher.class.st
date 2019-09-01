@@ -24,7 +24,7 @@ BaselineOfGTasksDispatcher >> baseline: spec [
 			spec
 				className: 'ConfigurationOfNeoJSON';
 				versionString: #'stable';
-				repository: 'https://github.com/svenvc/NeoJSON/tree/master/repository']].
+				repository: 'github://svenvc/NeoJSON/repository']].
 				 
 ]
 
