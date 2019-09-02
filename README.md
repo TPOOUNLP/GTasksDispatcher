@@ -1,5 +1,5 @@
 # GTasksDispatcher
-This project uses Google Tasks to decouple a "dispatcher" and "workker" roles.
+This project uses Google Tasks to decouple a "dispatcher" and "worker" roles.
 
 In Pharo go to Tools, Iceberg and click in new. From the options select clone from github.com and fill with the information below:  
 
@@ -10,7 +10,7 @@ In Pharo go to Tools, Iceberg and click in new. From the options select clone fr
 
 	Protocol: HTTPS
 
-When you finish cloning the project, right click in GTasksDispatcher and in Metacello select Install baseline of GTasksDisparcher (Default) to get all the dependences needed to run the project.
+When you finish cloning the project, right click in GTasksDispatcher and in Metacello select Install baseline of GTasksDisparcher (Default) to get all the dependencies needed to run the project.
 
 Add your credentials to UsersCredentials >> initialize. For example:
 
@@ -22,7 +22,7 @@ Add your credentials to UsersCredentials >> initialize. For example:
                     
 Then, set your username in UsersCredentials >> getMyCredentials
 
-	|credential |
+	|credential|
 	credential:= credentials at: 'username'.
 	^ UserCredential key: (credential at: 'key') secret: (credential at: 'secret') redirectUrl: (credential at: 'redirectUrl')
 	
